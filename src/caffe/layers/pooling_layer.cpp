@@ -146,13 +146,11 @@ void PoolingLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
   if (top.size() > 1) {
     top[1]->ReshapeLike(*top[0]);
   }
-#ifndef USE_CUDNN
   // If max pooling, we will initialize the vector index part.
   if (this->layer_param_.pooling_param().pool() ==
       PoolingParameter_PoolMethod_MAX && top.size() == 1) {
     max_idx_.Reshape(pooled_shape_);
   }
-#endif
   // If stochastic pooling, we will initialize the random index part.
   if (this->layer_param_.pooling_param().pool() ==
       PoolingParameter_PoolMethod_STOCHASTIC) {
